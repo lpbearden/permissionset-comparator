@@ -9,9 +9,9 @@ const jsforce = require('jsforce');
 const session = require('express-session');
 
 // Require route files
-const site = require('./routes/site');
-const auth = require("./routes/auth");
-const pset = require("./routes/pset");
+const site = require('./site');
+const auth = require('./auth');
+const pset = require('./pset');
 
 // Setup HTTP Server
 const app = express();
@@ -36,13 +36,15 @@ app.set('view engine', 'jade');
 
 // General / Index route
 app.get('/', site.index);
+app.get('/success', site.success);
 
 
 // Auth routes
 app.get('/oauth2/auth', auth.auth);
-app.get('/oauth2/callback', auth.callback);
+app.get('/oauth2/callback', auth.success);
 
 // Permission Set Routes
 app.get('/permissionsets', pset.list);
+app.get("/permissionsets/compare", pset.compare);
 
 module.exports = app;
